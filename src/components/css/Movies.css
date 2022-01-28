@@ -1,0 +1,6 @@
+.movies__body {
+  min-height: calc(100vh - 60px);
+  padding: 20px;
+  background: #f0f2f5;
+}
+

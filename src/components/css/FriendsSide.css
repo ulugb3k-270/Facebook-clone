@@ -1,0 +1,48 @@
+.friendSide__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.friendSide__menu {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.friendSide__menu.active {
+  background: #f0f2f5;
+}
+
+.friendSide__menuIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.friendSide__menu:hover {
+  background: #f0f2f5;
+}
+
+.friendSide__menuIcon.active {
+  background: #2d82f1;
+  color: white;
+}
+
+.friendSide__menuIcon.active > .MuiSvgIcon-root {
+  color: white;
+}
+
+.friendSide__menuTxt {
+  font-weight: bold;
+  font-size: 18px;
+  color: black !important;
+}

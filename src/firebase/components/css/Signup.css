@@ -1,0 +1,42 @@
+.reg__formTop {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.reg__formTop > input {
+  width: 48%;
+  padding: 10px 20px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #d1d1d1;
+  background-color: #f5f6f7;
+}
+
+.reg__formTop > input:focus {
+  outline: none;
+  border: 1px solid #e59700;
+}
+
+.reg__formPass {
+  width: 100%;
+}
+
+.reg__formChoice {
+  font-size: 13px;
+}
+
+.reg__formImg::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.reg__formImg {
+  position: relative;
+  cursor: pointer;
+  text-align: start;
+  display: flex;
+  justify-content: start;
+}
+
+.login__formSignin.active {
+  background: #115abb !important;
+}

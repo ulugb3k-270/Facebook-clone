@@ -1,0 +1,162 @@
+.Friends {
+  background: #f0f2f5;
+  max-height: calc(100vh - 60px);
+  width: 100%;
+}
+
+.Friends::-webkit-scrollbar{
+  display: none;
+}
+
+.friend__responsive {
+  display: none;
+}
+
+.friends__container {
+  display: flex;
+}
+
+.asd {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  gap: 40px;
+  width: 100%;
+  max-height: calc(100vh - 60px);
+  height: 100%;
+}
+
+.friends__side {
+  max-width: 360px;
+  width: 100%;
+  height: calc(100vh - 60px);
+  background: white;
+  position: static;
+  left: 0;
+  box-shadow: -7px 7px 20px #888888;
+  padding: 10px 20px;
+}
+
+.friend {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  row-gap: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px #888888;
+  width: 220px;
+  justify-content: space-between;
+}
+
+.friend > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.friend__details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.addFriendBtn {
+  background-color: #2d82f12f !important;
+  color: #2d82f1 !important;
+  text-transform: capitalize !important;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.removeFriendBtn {
+  text-transform: capitalize !important;
+  background: #f0f2f5 !important;
+  color: black;
+  border-radius: 10px;
+  transform: translateY(-10px);
+}
+
+.cancelFriendBtn {
+  transform: translateY(45px);
+}
+
+@media (max-width: 840px) {
+  .friends__side {
+    width: 50%;
+  }
+}
+@media (max-width: 788px) {
+  .asd {
+    row-gap: 10px !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .friend {
+    display: none;
+    
+  }
+
+  .friend__responsive {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .friendResponsive__card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    
+  }
+
+  .friendResponsive__card > img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+  }
+
+  .addFriendBtn {
+    color: white !important;
+    background: #2d82f1 !important;
+  }
+
+  .friendResponsive__cardSide {
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    width: 100%;
+
+  }
+
+  .friendResponsive__cardSideButtons {
+    display: flex;
+    justify-content: space-between;
+    max-width: 788px;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .removeFriendBtn {
+    transform: translate(0);
+  }
+
+  .addFriendBtn,
+  .removeFriendBtn {
+    padding: 5px !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 1168px) {
+  .friends__side {
+    display: none;
+  }
+}

@@ -1,0 +1,79 @@
+.bookmark__header {
+  background: #265599;
+  padding: 5px 10px;
+}
+
+.Bookmark {
+  height: 100vh;
+}
+.bookmark__headerContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 57%;
+}
+.bookmark__headerContent > .MuiSvgIcon-root {
+  color: white !important;
+  cursor: pointer;
+}
+
+.bookmark__headerContent > img {
+  max-width: 130px;
+  width: 100%;
+}
+
+.bookmark__body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  background: #f0f2f5;
+  height: calc(100vh - 36px);
+}
+
+.header__bodyCard {
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  gap: 5px;
+  padding: 5px 10px;
+}
+
+.bookmark__cardHover:hover {
+  background: #f0f2f5;
+}
+
+.bookmark__cardButtonHover:hover {
+  background: #2d82f1;
+  color: white;
+}
+
+.bookmark__logOutPopUp {
+  display: none;
+}
+
+.bookmark__logOutPopUp.active {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  height: calc(100vh - 36px);
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.274);
+  top: 0;
+  left: 0;
+}
+
+.bookmark__logOutPopUpContainer {
+  padding: 10px 20px;
+  background: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.bookmark__logOutPopUpContainer > button {
+  border: 1px solid grey;
+}

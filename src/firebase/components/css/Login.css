@@ -1,0 +1,140 @@
+.Login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f0f2f5;
+  padding: 20px;
+}
+.login__left > img {
+  max-width: 301px;
+  width: 100%;
+}
+
+.login__left {
+  padding: 20px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: 30px;
+  border-radius: 10px;
+}
+
+.login__left > p {
+  text-align: center;
+}
+
+.login__loginMethods {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 80%;
+}
+
+.login__loginMethods > .login__fb {
+  background: #1877f2 !important;
+  color: white !important;
+}
+
+.login__loginMethods > img {
+  cursor: pointer;
+}
+
+/* Login Form */
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 80%;
+  position: relative;
+}
+
+.login__form > .login__formOr {
+  text-align: center;
+  position: relative;
+}
+
+.login__form > .login__formOr::after {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 1px;
+  background: #d1d1d1;
+  top: 60%;
+  left: 0;
+}
+.login__form > .login__formOr::before {
+  content: "";
+  position: absolute;
+  width: 40%;
+  height: 1px;
+  background: #d1d1d1;
+  top: 60%;
+  right: 0;
+}
+
+.login__form > input {
+  padding: 10px 20px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid #d1d1d1;
+  background-color: #f5f6f7;
+  width: 100%;
+}
+.login__form > input:focus {
+  outline: none;
+  border: 1px solid #e59700;
+}
+
+.login__formSignin {
+  width: 100%;
+  background: #1877f2 !important;
+  text-transform: capitalize !important;
+  color: white !important;
+}
+
+.login__formSignin.active{
+  background: #084697;
+  cursor: wait;
+}
+
+.login__formSignup {
+  width: 100%;
+  margin: 0 auto !important;
+  text-transform: capitalize !important;
+  background: #00a400 !important;
+  color: white !important;
+}
+
+.login__google {
+  background: #f7f7f7 !important;
+  box-shadow: 0px 0px 3px #888 !important;
+  color: black !important;
+}
+
+.login__footerTxt {
+  font-size: 12px;
+  color: grey;
+}
+
+.login__formOtherWays {
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 425px) {
+  .Login {
+    height: auto;
+    padding: 0;
+  }
+  .login__footerTxt {
+    position: absolute;
+    bottom: 10px;
+  }
+}

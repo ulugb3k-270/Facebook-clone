@@ -4,9 +4,9 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { useEffect } from "react";
-import { useStateValue } from "../Context/StateProvider";
-import { db } from "../firebase/config";
-import "./css/HomePage.css";
+import { useStateValue } from "../../Context/StateProvider";
+import { db } from "../../firebase/config";
+import "../css/HomePage.css";
 import Posts from "./Posts";
 import Stories from "./Stories";
 import Upload from "./Upload";

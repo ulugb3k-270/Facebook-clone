@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "./Post";
 import { onSnapshot, collection, query, orderBy } from "@firebase/firestore";
-import { db } from "../firebase/config";
+import { db } from "../../firebase/config";
 
 export default function Posts() {
   const [posts, setPosts] = useState([]);
@@ -27,6 +27,7 @@ export default function Posts() {
           userImg={post.data().userImg}
           postImg={post.data().postImg}
           timestamp={post.data().timestamp}
+          postVideo = {post.data().postVideo}
         />
       ))}
     </div>

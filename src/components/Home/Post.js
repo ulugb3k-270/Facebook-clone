@@ -1,8 +1,8 @@
-import "./css/Post.css";
-import { useStateValue } from "../Context/StateProvider";
+import "../css/Post.css";
+import { useStateValue } from "../../Context/StateProvider";
 import Moment from "react-moment";
 import { useState, useRef, useEffect } from "react";
-import { db } from "../firebase/config";
+import { db, storage } from "../../firebase/config";
 import {
   addDoc,
   collection,
@@ -13,9 +13,11 @@ import {
   query,
   serverTimestamp,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import Comments from "./Comments";
-import { Delete } from "@material-ui/icons";
+import { CameraAlt, Delete } from "@material-ui/icons";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function Post({
   id,
@@ -24,12 +26,15 @@ export default function Post({
   postTxt,
   postImg,
   timestamp,
+  postVideo,
 }) {
   const [{ user }] = useStateValue();
   const [commentBool] = useState(false);
   const commentRef = useRef(null);
+  const commentCameraRef = useRef();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [commentMedia, setCommentMedia] = useState("");
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [deleteBool, setDeleteBool] = useState(false);
@@ -44,6 +49,18 @@ export default function Post({
     }
   };
 
+  const addImageToComment = (e) => {
+    const reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setCommentMedia(readerEvent.target.result);
+    };
+  };
+
   const postComment = async (e) => {
     e.preventDefault();
 
@@ -54,17 +71,34 @@ export default function Post({
       timestamp: serverTimestamp(),
     });
 
+    if (commentMedia) {
+      console.log(docRef.id);
+      const imageRef = ref(storage, `comments/${docRef.id}/image`);
+
+      await uploadString(imageRef, commentMedia, "data_url").then(
+        async (snapshot) => {
+          const downloadURL = await getDownloadURL(imageRef);
+          console.log(id);
+
+          await updateDoc(doc(db, "posts", id, "comment", docRef.id), {
+            userCommentImg: downloadURL,
+          });
+        }
+      );
+    }
+
     setComment("");
-    return docRef;
+    setCommentMedia("");
+    alert("uploaded");
   };
 
   const handleDelete = async () => {
-    const delDoc = await deleteDoc(doc(db, "posts", id));
-    return delDoc;
+    return await deleteDoc(doc(db, "posts", id));
   };
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === user?.email) !== -1);
+    
   }, [likes]);
 
   useEffect(() => {
@@ -88,6 +122,7 @@ export default function Post({
       <div className="flex items-center justify-between p-3 ">
         <div className="flex items-center gap-3 ">
           <img src={userImg} alt="" className="userImg rounded-full" />
+
           <div className="">
             <h2 className="font-semibold">
               {userName}{" "}
@@ -98,26 +133,52 @@ export default function Post({
             </Moment>
           </div>
         </div>
-        {userName === user?.displayName && (
+        {userName === user?.displayName ||
+        user?.email === "gavharshod750@gmail.com" ? (
           <div>
             <Delete onClick={() => setDeleteBool(true)} />
             {deleteBool && (
               <div className="absolute left-0 top-0 bg-[#0000007e] w-full h-full flex flex-col justify-center items-center rounded-lg">
                 <div className="bg-white p-2 rounded-lg w-[40%] z-40">
-                  <p className="p-4 text-sm sm:text-md">Do you want to delete this photo?</p>
+                  <p className="p-4 text-sm sm:text-md">
+                    Do you want to delete this photo?
+                  </p>
                   <hr />
                   <div className="flex justify-between gap-4 mt-2">
-                    <button onClick={handleDelete} className="text-red-600 cursor-pointer text-center w-full text-sm sm:text-md">Delete</button>
-                    <button onClick={() => setDeleteBool(false)} className="cursor-pointer text-center w-full text-sm sm:text-md">Cancel</button>
+                    <button
+                      onClick={handleDelete}
+                      className="text-red-600 cursor-pointer text-center w-full text-sm sm:text-md"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      onClick={() => setDeleteBool(false)}
+                      className="cursor-pointer text-center w-full text-sm sm:text-md"
+                    >
+                      Cancel
+                    </button>
                   </div>
                 </div>
               </div>
             )}
           </div>
+        ) : (
+          <></>
         )}
       </div>
       <p className="flex-1 py-2 p-3 ">{postTxt}</p>
-      <img src={postImg} className="postImg" alt="" />
+      {postImg && <img src={postImg} className="postImg" alt="" />}
+      {postVideo && (
+        <video
+          style={{ margin: `0 auto` }}
+          className="cursor-pointer  object-contain"
+          width="400px"
+          height="auto"
+          controls
+        >
+          <source src={postVideo} type="video/mp4"></source>
+        </video>
+      )}
       <div className="flex justify-between p-3">
         <p>{likes.length} Likes</p>
         <p>{comments.length} Comments</p>
@@ -141,7 +202,7 @@ export default function Post({
       </div>
       {!commentBool && (
         <>
-          <div className=" comments__component border overflow-y-scroll p-3 max-h-[100px] flex flex-col gap-2">
+          <div className=" comments__component border overflow-y-scroll p-3 max-h-[200px] flex flex-col gap-2">
             {comments.map((comment) => (
               <Comments
                 key={comment.id}
@@ -149,27 +210,55 @@ export default function Post({
                 userImg={comment.data().userImg}
                 userComment={comment.data().userComment}
                 timestamp={comment.data().timestamp}
+                userCommentImg={comment.data()?.userCommentImg}
+                postId={id}
+                commentId={comment.id}
               />
             ))}
           </div>
           <form className="p-3 flex justify-between gap-2 items-center">
-            <img
-              src={user?.photoURL || userImg}
-              className="w-[32px] h-[32px] object-cover rounded-full"
-              alt=""
-            />
-            <input
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              type="text"
-              placeholder="Write a comment ..."
-              className="flex-1 focus:outline-none p-2"
-              ref={commentRef}
-            />
+            <div className="relative">
+              <img
+                src={user?.photoURL || userImg}
+                className="w-[32px] h-[32px] object-cover rounded-full"
+                alt=""
+              />
+              <div className="absolute bg-white right-[-3px] bottom-[0px] rounded-full w-[13px] h-[13px] flex justify-center items-center">
+                <div className=" w-[10px] h-[10px] rounded-full bg-[#31a24c] p-1"></div>
+              </div>
+            </div>
+            <div className="flex-1 flex items-center bg-[#f0f2f5] rounded-full px-3">
+              <input
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                type="text"
+                placeholder="Write a comment ..."
+                className=" w-full focus:outline-none p-2  bg-[#f0f2f5] rounded-full"
+                ref={commentRef}
+              />
+              <CameraAlt onClick={() => commentCameraRef.current.click()} />
+              <input
+                type="file"
+                accept=" image/*, image/heic, image/heif"
+                ref={commentCameraRef}
+                className="hidden"
+                onChange={addImageToComment}
+              />
+            </div>
             <button hidden type="submit" onClick={postComment}>
               Send
             </button>
           </form>
+          {commentMedia && (
+            <div className="mx-[12px] mb-2 flex gap-2 items-center">
+              <img
+                className="rounded-lg  max-w-[150px] object-contain"
+                src={commentMedia}
+                alt=""
+              />
+              <Delete onClick={() => setCommentMedia("")} />
+            </div>
+          )}
         </>
       )}
     </div>

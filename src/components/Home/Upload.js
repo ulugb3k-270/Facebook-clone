@@ -1,12 +1,8 @@
-import "./css/Upload.css";
+import "../css/Upload.css";
 import { useRef, useEffect, useState } from "react";
-import { useStateValue } from "../Context/StateProvider";
-import {
-  Close,
-  CloudUpload as UploadIcon,
-  Delete,
-} from "@material-ui/icons";
-import { db, storage } from "../firebase/config";
+import { useStateValue } from "../../Context/StateProvider";
+import { Close, CloudUpload as UploadIcon, Delete } from "@material-ui/icons";
+import { db, storage } from "../../firebase/config";
 import {
   addDoc,
   collection,
@@ -17,14 +13,17 @@ import {
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export default function Upload() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const [uploadBool, setUploadBool] = useState(false);
+  const [uploadVideoBool, setUploadVideoBool] = useState(false);
   const [uploadFileBool, setUploadFileBool] = useState(true);
   const filePickerRef = useRef(null);
+  const videoPickerRef = useRef(null);
   const [loading, setLoading] = useState(null);
 
   //  input files
   const [selectedFile, setSelectedFile] = useState("");
+  const [selectedVideo, setSelectedVideo] = useState("");
   const [input, setInput] = useState("");
   // input files end
 
@@ -40,9 +39,21 @@ export default function Upload() {
     };
   };
 
+  const addVideoToPost = (e) => {
+    const reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onload = (readerEvent) => {
+      setSelectedVideo(readerEvent.target.result);
+    };
+  };
+
   //   upload
   const uploadPost = async (e) => {
-    if (input || selectedFile) {
+    if (input || selectedFile || selectedVideo) {
       e.preventDefault();
       setLoading(true);
 
@@ -53,33 +64,48 @@ export default function Upload() {
         timestamp: serverTimestamp(),
       });
 
-      if(selectedFile){
+      if (selectedFile) {
         const imageRef = ref(storage, `message/${docRef.id}/image`);
 
-      await uploadString(imageRef, selectedFile, "data_url").then(
-        async (snapshot) => {
-          const downloadURL = await getDownloadURL(imageRef);
-          await updateDoc(doc(db, "posts", docRef.id), {
-            postImg: downloadURL,
-          });
-        }
-      );
+        await uploadString(imageRef, selectedFile, "data_url").then(
+          async (snapshot) => {
+            const downloadURL = await getDownloadURL(imageRef);
+            await updateDoc(doc(db, "posts", docRef.id), {
+              postImg: downloadURL,
+            });
+          }
+        );
+        setSelectedFile(null);
+        setUploadBool(false);
       }
 
-      setSelectedFile(null);
-      setUploadBool(false);
+      if (selectedVideo) {
+        const videoRef = ref(storage, `message/${docRef.id}/image`);
+
+        await uploadString(videoRef, selectedVideo, "data_url").then(
+          async (snapshot) => {
+            const downloadURL = await getDownloadURL(videoRef);
+            await updateDoc(doc(db, "posts", docRef.id), {
+              postVideo: downloadURL,
+            });
+          }
+        );
+
+        setSelectedVideo("");
+        setUploadVideoBool(false);
+      }
+
       setLoading(false);
       setInput("");
     }
   };
 
-  // -------------------
-  
-
-
+  console.log(selectedFile);
+  console.log(`video >>> ${selectedVideo} `);
 
   // -------------------
 
+  // -------------------
 
   return (
     <div className="upload rounded-lg">
@@ -108,7 +134,13 @@ export default function Upload() {
         <hr className="text-gray-200 mt-3" />
         <div className="flex justify-evenly p-2">
           {/* Video SVG */}
-          <div className="flex gap-1 rounded-xl w-full justify-center  items-center p-3 cursor-pointer hover:bg-gray-200">
+          <div
+            onClick={() => {
+              setUploadVideoBool(true);
+              setUploadFileBool(true);
+            }}
+            className="flex gap-1 rounded-xl w-full justify-center  items-center p-3 cursor-pointer hover:bg-gray-200"
+          >
             <svg
               viewBox="0 0 24 24"
               width="1em"
@@ -128,7 +160,7 @@ export default function Upload() {
                 </g>
               </g>
             </svg>
-            <span className="uploadTxt">Live Video</span>
+            <span className="uploadTxt">Video</span>
           </div>
           {/* Photo SVG */}
           <div
@@ -191,7 +223,11 @@ export default function Upload() {
         </div>
       </div>
       {uploadBool && (
-        <div className={` fixed w-full h-full popUp__upload top-0 left-0 grid place-items-center z-50 ${loading ? "cursor-wait" : ""}`}>
+        <div
+          className={` fixed w-full h-full popUp__upload top-0 left-0 grid place-items-center z-50 ${
+            loading ? "cursor-wait" : ""
+          }`}
+        >
           <form
             className={`bg-white upload__box rounded-xl p-4  popUp__upload-box  ${
               uploadFileBool ? " h-[460px]" : "h-[250px]"
@@ -245,7 +281,7 @@ export default function Upload() {
                       ref={filePickerRef}
                       onChange={addImageToPost}
                       className="popUp__file-input"
-                      accept="image/gif, image/png, image/jpeg"
+                      accept=" image/*, image/heic, image/heif"
                     />
                   </>
                 ) : (
@@ -267,9 +303,108 @@ export default function Upload() {
             {/* ERROR */}
             <button
               className={`${
-                !loading
-                  ? "bg-blue-600"
-                  : "bg-blue-300"
+                !loading ? "bg-blue-600" : "bg-blue-300"
+              } w-full rounded-lg text-white hover:bg-blue-600 p-1 mt-3 `}
+              onClick={uploadPost}
+              type="submit"
+            >
+              Post
+            </button>
+          </form>
+        </div>
+      )}
+
+      {/* upload video */}
+
+      {uploadVideoBool && (
+        <div
+          className={` fixed w-full h-full popUp__upload top-0 left-0 grid place-items-center z-50 ${
+            loading ? "cursor-wait" : ""
+          }`}
+        >
+          <form
+            className={`bg-white upload__box rounded-xl p-4  popUp__upload-box  ${
+              uploadFileBool ? " h-[460px]" : "h-[250px]"
+            }`}
+          >
+            <div className="flex gap-4 relative">
+              <p className="flex-1 text-center text-[20px] py-1 font-bold">
+                Create Post
+              </p>
+              <Close
+                className="absolute top-0 right-2 bg-gray-100 rounded-full !w-[36px]  !h-[36px] p-1 hover:bg-gray-200"
+                onClick={() => {
+                  setUploadVideoBool(false);
+                  setSelectedVideo("");
+                }}
+              />
+            </div>
+            <hr className="text-gray-200 mt-3" />
+            <div className="w-full p-3">
+              <div className="user__info flex items-center gap-2">
+                <img
+                  src={user?.photoURL}
+                  alt=""
+                  className="rounded-full w-[40px] h-[40px] cursor-pointer"
+                />
+                <p>{user?.displayName || "Guest"}</p>
+              </div>
+              <input
+                type="text"
+                placeholder={`What is in your mind, ${user?.displayName}?`}
+                className="w-full focus:outline-none p-2 mt-3  border rounded-lg"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+              />
+            </div>
+            {uploadVideoBool && (
+              <div className="upload p-2 border border-gray-300 rounded-lg relative">
+                {!selectedVideo ? (
+                  <>
+                    <div
+                      className="bg-gray-100 hover:bg-gray-200 w-full h-[200px] cursor-pointer flex flex-col items-center justify-center"
+                      onClick={() => videoPickerRef.current.click()}
+                    >
+                      <UploadIcon />
+                      <p>Upload Video</p>
+                    </div>
+                    <Close
+                      className="absolute top-3 right-3 bg-white rounded-full !w-27px]  !h-27px] p-1 hover:bg-gray-200"
+                      onClick={() => {
+                        setUploadFileBool(false);
+                        setSelectedVideo("");
+                      }}
+                    />
+                    <input
+                      type="file"
+                      hidden
+                      ref={videoPickerRef}
+                      onChange={addVideoToPost}
+                      className="popUp__file-input"
+                      accept="video/*,  video/x-m4v, video/webm, video/x-ms-wmv, video/x-msvideo, video/3gpp, video/flv, video/x-flv, video/mp4, video/quicktime, video/mpeg, video/ogv, .ts, .mkv"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <video
+                      src={selectedVideo}
+                      className="h-[200px] selectedFile"
+                      controls
+                      alt=""
+                    />
+
+                    <Delete
+                      className="absolute top-3 right-3 bg-white rounded-full !w-27px]  !h-27px] p-1 hover:bg-gray-200"
+                      onClick={() => setSelectedVideo("")}
+                    />
+                  </>
+                )}
+              </div>
+            )}
+            {/* ERROR */}
+            <button
+              className={`${
+                !loading ? "bg-blue-600" : "bg-blue-300"
               } w-full rounded-lg text-white hover:bg-blue-600 p-1 mt-3 `}
               onClick={uploadPost}
               type="submit"

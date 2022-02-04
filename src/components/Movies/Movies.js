@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./css/Movies.css";
+import "../css/Movies.css";
 import { Avatar } from "@material-ui/core";
 import {
   Menu,
@@ -14,13 +14,16 @@ import {
   Info,
 } from "@material-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
-import "./css/Header.css";
-import { useStateValue } from "../Context/StateProvider";
-import MoviesRow from "./MoviesRow";
-import requests from "../moviesGenres";
+import "../css/Header.css";
+import { useStateValue } from "../../Context/StateProvider";
+import MoviesRow from "../Movies/MoviesRow";
+import requests from "../../moviesGenres";
+import Loader from "./Loader";
 
 export default function Movies() {
   const [logOutHover, setLogOutHover] = useState(true);
+
+  const [loading, setLoading] = useState(false);
   const [{ user }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
@@ -39,7 +42,11 @@ export default function Movies() {
   };
 
   useEffect(() => {
-    alert("This page is under development. Functions may not work properly.");
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500);
   }, []);
 
   return (
@@ -109,14 +116,17 @@ export default function Movies() {
           </div>
         </div>
       </div>
-      <div className="movies__body">
-        <MoviesRow name={requests.fetchTopRated} title="Top Rated" />
-        <MoviesRow name={requests.fetchTrending} title="Trending" />
-        <MoviesRow name={requests.fetchComedy} title="Comedy" />
-        <MoviesRow name={requests.fetchAction} title="Action" />
-        <MoviesRow name={requests.fetchHorror} title="Horror" />
-      </div>
-
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="movies__body">
+          <MoviesRow name={requests.fetchTopRated} title="Top Rated" />
+          <MoviesRow name={requests.fetchTrending} title="Trending" />
+          <MoviesRow name={requests.fetchComedy} title="Comedy" />
+          <MoviesRow name={requests.fetchAction} title="Action" />
+          <MoviesRow name={requests.fetchHorror} title="Horror" />
+        </div>
+      )}
     </div>
   );
 }

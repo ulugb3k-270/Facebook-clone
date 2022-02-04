@@ -2,9 +2,9 @@ import { People, PersonAdd, Settings } from "@material-ui/icons";
 import { collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useStateValue } from "../Context/StateProvider";
-import { db } from "../firebase/config";
-import "./css/FriendsSide.css";
+import { useStateValue } from "../../Context/StateProvider";
+import { db } from "../../firebase/config";
+import "../css/FriendsSide.css";
 
 export default function FriendsSide() {
   const [friends, setFriends] = useState(0);

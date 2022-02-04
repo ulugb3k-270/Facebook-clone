@@ -1,5 +1,5 @@
-import "./css/Header.css";
-import "./css/Friends.css";
+import "../css/Header.css";
+import "../css/Friends.css";
 
 import React, { useEffect, useState } from "react";
 import { Avatar, Button } from "@material-ui/core";
@@ -16,9 +16,9 @@ import {
   Info,
 } from "@material-ui/icons";
 
-import { useStateValue } from "../Context/StateProvider";
+import { useStateValue } from "../../Context/StateProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../firebase/config";
+import { db } from "../../firebase/config";
 import FriendsSide from "./FriendsSide";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 
@@ -124,14 +124,13 @@ export default function Friends() {
             {friends.length ? (
               <>
                 <h1 className="absolute right-0 -top-1">
-                  Info: Your Friends: {friends.length}
-                </h1>
+                    Info: Your Friends: {friends.length}
+                  </h1>
 
                 {friends.map((use) => (
                   <div key={use.id}>
                     <div className={`friend`}>
                       <img src={use?.data().userImg} alt="" />
-                      {/* asgdiuasgdiluasiudasiudasiuhd */}
                       <p className="flex gap-2 px-5">
                         {use?.data().username}{" "}
                         {use?.data().userEmail ===

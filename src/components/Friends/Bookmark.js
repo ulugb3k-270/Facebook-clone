@@ -1,4 +1,4 @@
-import "./css/Bookmark.css";
+import "../css/Bookmark.css";
 import React, { useState } from "react";
 import {
   ArrowBack,
@@ -11,8 +11,8 @@ import {
 } from "@material-ui/icons";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useStateValue } from "../Context/StateProvider";
 import { Button } from "@material-ui/core";
+import { useStateValue } from "../../Context/StateProvider";
 
 
 export default function Bookmark() {

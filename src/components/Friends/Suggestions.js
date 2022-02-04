@@ -1,5 +1,5 @@
-import "./css/Header.css";
-import "./css/Friends.css";
+import "../css/Header.css";
+import "../css/Friends.css";
 
 import React, { useEffect, useState } from "react";
 import { Avatar, Button } from "@material-ui/core";
@@ -16,9 +16,9 @@ import {
   Info,
 } from "@material-ui/icons";
 
-import { useStateValue } from "../Context/StateProvider";
+import { useStateValue } from "../../Context/StateProvider";
 import { Link, useNavigate } from "react-router-dom";
-import { db } from "../firebase/config";
+import { db } from "../../firebase/config";
 import FriendsSide from "./FriendsSide";
 import {
   collection,

@@ -1,5 +1,5 @@
-import "./css/About.css";
-import "./css/Header.css";
+import "../css/About.css";
+import "../css/Header.css";
 import { Avatar } from "@material-ui/core";
 import {
   Menu,
@@ -15,8 +15,9 @@ import {
 } from "@material-ui/icons";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useStateValue } from "../../Context/StateProvider";
 
-import { useStateValue } from "../Context/StateProvider";
+
 
 export default function About() {
   const [logOutHover, setLogOutHover] = useState(true);

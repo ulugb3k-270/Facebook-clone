@@ -2,10 +2,12 @@ import { ContactlessOutlined } from "@material-ui/icons";
 
 export const initialState = {
   user: null,
+  description: []
 };
 
 export const actionTypes = {
   SET_USER: "SET_USER",
+  SET_DESCRIPTION: "SET_DESCRIPTION"
 };
 
 const reducer = (state, action) => {
@@ -16,6 +18,12 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
+    
+    case actionTypes.SET_DESCRIPTION:
+    return{
+      ...state,
+      description: action.description,
+    }
     default:
       return {
         state,

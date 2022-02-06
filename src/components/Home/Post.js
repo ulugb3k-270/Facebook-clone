@@ -88,7 +88,7 @@ export default function Post({
 
     setComment("");
     setCommentMedia("");
-    alert("uploaded");
+    
   };
 
   const handleDelete = async () => {

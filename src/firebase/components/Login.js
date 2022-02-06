@@ -30,8 +30,6 @@ export default function Login() {
   const signInGoogle = () => {
     navigate("/");
 
-    
-
     signInWithPopup(auth, provider)
       .then((result) => {
         dispatch({
@@ -40,11 +38,7 @@ export default function Login() {
         });
       })
       .catch((error) => alert(error));
-
-    
   };
-
-  
 
   return (
     <div className="Login">

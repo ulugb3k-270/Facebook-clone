@@ -18,6 +18,7 @@ import {
 import Comments from "./Comments";
 import { CameraAlt, Delete } from "@material-ui/icons";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import VideoPlayer from "./VideoPlayer";
 
 export default function Post({
   id,
@@ -72,13 +73,11 @@ export default function Post({
     });
 
     if (commentMedia) {
-      console.log(docRef.id);
       const imageRef = ref(storage, `comments/${docRef.id}/image`);
 
       await uploadString(imageRef, commentMedia, "data_url").then(
         async (snapshot) => {
           const downloadURL = await getDownloadURL(imageRef);
-          console.log(id);
 
           await updateDoc(doc(db, "posts", id, "comment", docRef.id), {
             userCommentImg: downloadURL,
@@ -169,15 +168,7 @@ export default function Post({
       <p className="flex-1 py-2 p-3 ">{postTxt}</p>
       {postImg && <img src={postImg} className="postImg" alt="" />}
       {postVideo && (
-        <video
-          style={{ margin: `0 auto` }}
-          className="cursor-pointer  object-contain"
-          width="400px"
-          height="auto"
-          controls
-        >
-          <source src={postVideo} type="video/mp4"></source>
-        </video>
+        <VideoPlayer src={postVideo} />
       )}
       <div className="flex justify-between p-3">
         <p>{likes.length} Likes</p>

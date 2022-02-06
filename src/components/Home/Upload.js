@@ -100,8 +100,6 @@ export default function Upload() {
     }
   };
 
-  console.log(selectedFile);
-  console.log(`video >>> ${selectedVideo} `);
 
   // -------------------
 

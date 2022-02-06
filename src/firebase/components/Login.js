@@ -7,7 +7,7 @@ import { provider, storage, db } from "../config";
 import { actionTypes } from "../../Context/reducer";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
-import { signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 
 export default function Login() {
@@ -27,9 +27,10 @@ export default function Login() {
   };
 
   // sign in using Google
-
   const signInGoogle = () => {
     navigate("/");
+
+    
 
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -42,6 +43,8 @@ export default function Login() {
 
     
   };
+
+  
 
   return (
     <div className="Login">

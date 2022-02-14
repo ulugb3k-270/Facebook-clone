@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useStateValue } from "../../Context/StateProvider";
 import { db } from "../../firebase/config";
 import "../css/HomePage.css";
+
 import Posts from "./Posts";
 import Stories from "./Stories";
 import Upload from "./Upload";
@@ -30,6 +31,7 @@ export default function HomePage() {
 
   return (
     <div className="homepage bg-gray-100">
+      
       <Stories />
       <Upload />
       <Posts />

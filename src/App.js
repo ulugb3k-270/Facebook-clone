@@ -10,25 +10,35 @@ import Description from "./components/Movies/Description";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useStateValue } from "./Context/StateProvider";
 import Suggestions from "./components/Friends/Suggestions";
+import { auth } from "./firebase/config";
+import { useEffect } from "react";
+import { actionTypes } from "./Context/reducer";
 function App() {
-  const [{ user }] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        return  dispatch({
+          type: actionTypes.SET_USER,
+          user: user,
+        });
+      } else {
+        return dispatch({ user: null });
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
-      {!user ? (
-        <Router>
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/reg" element={<Signup />} />
-          </Routes>
-        </Router>
-      ) : (
+      {user ? (
         <Router>
           <Routes>
             <Route
               path="/"
               element={
                 <>
-                  <Header />
+                  <Header activeHome={"active"} />
                   <div className="App__main">
                     <HomePage />
                   </div>
@@ -39,8 +49,15 @@ function App() {
             <Route path="/suggestions" element={<Suggestions />} />
             <Route path="/about" element={<About />} />
             <Route path="/movies" element={<Movies />} />
-            <Route path="/movies/description" element={<Description />}/>
+            <Route path="/movies/description" element={<Description />} />
             <Route path="/bookmark" element={<Bookmark />} />
+          </Routes>
+        </Router>
+      ) : (
+        <Router>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/reg" element={<Signup />} />
           </Routes>
         </Router>
       )}

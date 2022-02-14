@@ -28,6 +28,7 @@ export default function Posts() {
           postImg={post.data().postImg}
           timestamp={post.data().timestamp}
           postVideo = {post.data().postVideo}
+          userEmail = {post.data().userEmail}
         />
       ))}
     </div>

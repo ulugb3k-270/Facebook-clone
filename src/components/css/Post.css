@@ -25,6 +25,9 @@
   background-repeat: no-repeat;
   width: 100%;
   background-position: 50% -203px;
+  -webkit-filter: invert(39%) sepia(57%) saturate(200%) saturate(200%)
+    saturate(200%) saturate(200%) saturate(200%) saturate(147.75%)
+    hue-rotate(202deg) brightness(97%) contrast(96%);
 }
 
 .like__btn,
@@ -54,4 +57,15 @@
 .post__buttons {
   border-top: 1px solid #ced0d4;
   border-bottom: 1px solid #ced0d4;
+}
+
+.gif__icon {
+  background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/E2BXhjYXUP-.png");
+  background-position: 0px -413px;
+  background-size: auto;
+  width: 16px;
+  height: 16px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  cursor: pointer;
 }

@@ -11,15 +11,18 @@ import {
   Search,
   Info,
 } from "@material-ui/icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./css/Header.css";
 import { useStateValue } from "../Context/StateProvider";
+import { admin } from "../assets/admin";
+import { auth } from "../firebase/config";
 
-export default function Header() {
+export default function Header({activeHome, activePeople, activeInfo, activeMovies}) {
   const [logOutHover, setLogOutHover] = useState(true);
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const navigate = useNavigate()
+  const [isAdmin, setIsAdmin] = useState(false)
 
   //  Log Out button on/off function
   const hadnleLogOutHover = () => {
@@ -30,10 +33,21 @@ export default function Header() {
 
   const logOut = () => {
     navigate("/")
-    dispatch({
-      user: null,
-    });
+    auth.signOut()
   };
+
+  // Check user admin or not
+
+  useEffect(() => {
+    for(let i = 0; i < admin.length; i++){
+      if(admin[i] === user?.email){
+        setIsAdmin(true)
+        return
+      }
+    }
+  }, [])
+
+
 
   return (
     <div className="Header">
@@ -51,22 +65,22 @@ export default function Header() {
       </div>
       <div className="header__middle">
         <Link to="/">
-          <div className="header__middleIcon active">
+          <div className={`header__middleIcon ${activeHome}`}>
             <Home />
           </div>
         </Link>
         <Link to="/friends">
-          <div className="header__middleIcon">
+          <div className={`header__middleIcon ${activePeople}`}>
             <People />
           </div>
         </Link>
         <Link to="/about">
-          <div className="header__middleIcon">
+          <div className={`header__middleIcon ${activeInfo}`}>
             <Info />
           </div>
         </Link>
         <Link to="/movies">
-          <div className="header__middleIcon">
+          <div className={`header__middleIcon ${activeMovies}`} >
             <OndemandVideo />
           </div>
         </Link>
@@ -76,7 +90,7 @@ export default function Header() {
         <div className="header__rightUser" onClick={hadnleLogOutHover}>
           <Avatar src={user?.photoURL} />
 
-          <p>{user?.displayName} <span className={user?.displayName === "Ulugb3k270" && "verified"}></span></p>
+          <p>{user?.displayName} <span className={`${isAdmin  && "verified"}`} ></span></p>
           <div
             className={
               logOutHover

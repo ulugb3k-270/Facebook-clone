@@ -1,5 +1,5 @@
 import "../css/Upload.css";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import { useStateValue } from "../../Context/StateProvider";
 import { Close, CloudUpload as UploadIcon, Delete } from "@material-ui/icons";
 import { db, storage } from "../../firebase/config";
@@ -59,6 +59,7 @@ export default function Upload() {
 
       const docRef = await addDoc(collection(db, "posts"), {
         userName: user?.displayName,
+        userEmail: user?.email,
         postText: input,
         userImg: user?.photoURL,
         timestamp: serverTimestamp(),

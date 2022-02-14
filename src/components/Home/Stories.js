@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Add } from "@material-ui/icons";
-
 import { useStateValue } from "../../Context/StateProvider";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { db } from "../../firebase/config";
+
 export default function Stories() {
   const [suggestions, setSuggestions] = useState([]);
   const [{ user }] = useStateValue();
   useEffect(() => {
-    // const fetchFakeUsers = async () => {
-    //   // const res = await fetch(
-    //   //   "https://random-data-api.com/api/users/random_user?size=6"
-    //   // );
-    //   // const data = await res.json();
-
-    //   retu
-
-    // };
     return onSnapshot(query(collection(db, "users")), (snapshot) =>
       setSuggestions(snapshot.docs)
     );
   }, []);
-
 
   return (
     <div className="flex mb-4 gap-2 overflow-x-scroll p-1 stories__component">
@@ -39,7 +29,7 @@ export default function Stories() {
         </p>
       </div>
       {suggestions
-        .filter((suggestion) => suggestion?.data().userEmail !== user.email)
+        .filter((suggestion) => suggestion?.data().userEmail !== user?.email)
         .map((user) => (
           <div
             key={user?.data().id}

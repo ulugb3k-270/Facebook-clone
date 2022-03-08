@@ -18,40 +18,32 @@ body {
   background: #f1f1f1;
 }
 
-*::-webkit-scrollbar{
+*::-webkit-scrollbar {
   display: none;
- 
 }
 
-.stories__component::-webkit-scrollbar{
+.stories__component::-webkit-scrollbar {
   display: inline !important;
   width: 100%;
   background: unset;
   height: 5px;
 }
 
-
-
-.stories__component::-webkit-scrollbar-thumb{
+.stories__component::-webkit-scrollbar-thumb {
   background: rgb(180, 177, 177);
   border-radius: 10px;
-
 }
-.comments__component::-webkit-scrollbar{
+.comments__component::-webkit-scrollbar {
   display: inline !important;
   height: 100%;
   background: unset;
   width: 5px;
 }
 
-
-
-.comments__component::-webkit-scrollbar-thumb{
+.comments__component::-webkit-scrollbar-thumb {
   background: rgb(180, 177, 177);
   border-radius: 10px;
-
 }
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -86,8 +78,8 @@ a {
 }
 
 .verified {
-  background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yy/r/eD06S0y0aJL.png");
-  background-position: -149px -109px;
+  background-image: url("https://static.xx.fbcdn.net/rsrc.php/v3/yZ/r/uPOt_EKUTi4.png");
+  background-position: -68px -109px;
   background-size: auto;
   width: 12px;
   height: 12px;
@@ -95,8 +87,7 @@ a {
   display: inline-block;
 }
 
-.box__stories > .MuiSvgIcon-root{
-  
+.box__stories > .MuiSvgIcon-root {
   position: absolute;
   bottom: 33px;
   left: 40%;
@@ -104,7 +95,6 @@ a {
   border-radius: 50%;
   color: white;
   z-index: 10;
-
 }
 
 @media (max-width: 1200px) {
@@ -138,7 +128,7 @@ a {
   .upload__insideInput {
     font-size: 13px;
   }
-  .login__left{
+  .login__left {
     height: 100vh;
   }
 }

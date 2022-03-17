@@ -17,7 +17,7 @@ function VideoPlayer({ src }) {
   }, []);
 
   return (
-    <div className="relative flex justify-center select-none">
+    <div className="relative flex justify-center select-none max-h-[500px]">
       <video
         ref={videoRef}
         onPlay={useCallback(() => {

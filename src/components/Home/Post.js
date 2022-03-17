@@ -29,7 +29,7 @@ export default function Post({
   postImg,
   timestamp,
   postVideo,
-  userEmail
+  userEmail,
 }) {
   const [{ user }] = useStateValue();
   const [commentBool] = useState(false);
@@ -41,8 +41,8 @@ export default function Post({
   const [likes, setLikes] = useState([]);
   const [hasLiked, setHasLiked] = useState(false);
   const [deleteBool, setDeleteBool] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [isAdminPost, setIsAdminPost] = useState(false)
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminPost, setIsAdminPost] = useState(false);
 
   const like = async () => {
     if (hasLiked) {
@@ -101,14 +101,14 @@ export default function Post({
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === user?.email) !== -1);
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [likes]);
 
   useEffect(() => {
     return onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
       setLikes(snapshot.docs)
     );
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [db]);
 
   useEffect(() => {
@@ -119,24 +119,23 @@ export default function Post({
       ),
       (snapshot) => setComments(snapshot.docs)
     );
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [db]);
 
-   // Check user admin or not
+  // Check user admin or not
 
-   useEffect(() => {
-    for(let i = 0; i < admin.length; i++){
-      if( admin[i] === user?.email ){
-        setIsAdmin(true)
-       
+  useEffect(() => {
+    for (let i = 0; i < admin.length; i++) {
+      if (admin[i] === user?.email) {
+        setIsAdmin(true);
       }
-      
-      if(admin[i] === userEmail){
-        setIsAdminPost(true)
+
+      if (admin[i] === userEmail) {
+        setIsAdminPost(true);
       }
     }
-     // eslint-disable-next-line
-  }, [userEmail])
+    // eslint-disable-next-line
+  }, [userEmail]);
 
   return (
     <div className="post relative bg-white w-full rounded-lg">
@@ -147,19 +146,14 @@ export default function Post({
           <div className="">
             <h2 className="font-semibold flex items-center gap-1">
               {userName}{" "}
-              <span
-                className={
-                  isAdminPost ?  "verified" : undefined
-                }
-              />
+              <span className={isAdminPost ? "verified" : undefined} />
             </h2>
             <Moment fromNow interval={1000} className="text-gray-400 text-sm">
               {timestamp?.toDate()}
             </Moment>
           </div>
         </div>
-        {userName === user?.displayName ||
-        isAdmin ? (
+        {userName === user?.displayName || isAdmin ? (
           <div>
             <Delete onClick={() => setDeleteBool(true)} />
             {deleteBool && (
@@ -225,7 +219,11 @@ export default function Post({
       </div>
       {!commentBool && (
         <>
-          <div className={`comments__component border overflow-y-scroll ${!comments.length && "hidden"} p-3 max-h-[200px] flex flex-col gap-2 bg-white`}>
+          <div
+            className={`comments__component border overflow-y-scroll ${
+              !comments.length && "hidden"
+            } p-3 max-h-[200px] flex flex-col gap-2 bg-white`}
+          >
             {comments.map((comment) => (
               <Comments
                 key={comment.id}
@@ -236,7 +234,7 @@ export default function Post({
                 userCommentImg={comment.data()?.userCommentImg}
                 postId={id}
                 commentId={comment.id}
-                userEmail = {comment.data()?.userEmail}
+                userEmail={comment.data()?.userEmail}
               />
             ))}
           </div>

@@ -3,7 +3,6 @@ import Friends from "./components/Friends/Friends";
 import About from "./components/About/About";
 import HomePage from "./components/Home/HomePage";
 import Login from "./firebase/components/Login";
-import Signup from "./firebase/components/Signup";
 import Movies from "./components/Movies/Movies";
 import Bookmark from "./components/Friends/Bookmark";
 import Description from "./components/Movies/Description";
@@ -13,6 +12,7 @@ import Suggestions from "./components/Friends/Suggestions";
 import { auth } from "./firebase/config";
 import { useEffect } from "react";
 import { actionTypes } from "./Context/reducer";
+
 function App() {
   const [{ user }, dispatch] = useStateValue();
 
@@ -27,6 +27,7 @@ function App() {
         return dispatch({ user: null });
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -57,7 +58,6 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Login />} />
-            <Route path="/reg" element={<Signup />} />
           </Routes>
         </Router>
       )}

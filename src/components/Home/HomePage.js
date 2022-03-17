@@ -31,7 +31,6 @@ export default function HomePage() {
 
   return (
     <div className="homepage bg-gray-100">
-      
       <Stories />
       <Upload />
       <Posts />

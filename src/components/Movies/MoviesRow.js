@@ -3,11 +3,11 @@ import "../css/MoviesRow.css";
 import { useStateValue } from "../../Context/StateProvider";
 import { useNavigate } from "react-router-dom";
 
-
 export default function MoviesRow({ title, name }) {
   const [movies, setMovies] = useState([]);
-  const [{ description }, dispatch] = useStateValue();
   const navigate = useNavigate();
+  //eslint-disable-next-line
+  const [{}, dispatch] = useStateValue();
 
   const base_url = "https://image.tmdb.org/t/p/original/";
 
@@ -15,13 +15,9 @@ export default function MoviesRow({ title, name }) {
     const movieFetch = async () => {
       const response = await fetch(`https://api.themoviedb.org/3${name}`);
       const res = await response.json();
-      // return res
       setMovies(res?.results);
     };
-
     movieFetch();
-
-   
   }, [name]);
 
   const handleClick = (movie) => {
@@ -35,17 +31,17 @@ export default function MoviesRow({ title, name }) {
 
   return (
     <div className="moviesRow">
-          <h2>{title}</h2>
-          <div className="flex movieRow__poster overflow-scroll">
-            {movies.map((movie) => (
-              <img
-                key={movie.id}
-                src={`${base_url}${movie.poster_path || movie.backdrop_path}`}
-                alt={movie.name}
-                onClick={() => handleClick(movie)}
-              />
-            ))}
-          </div>
-        </div>
+      <h2>{title}</h2>
+      <div className="flex movieRow__poster overflow-scroll">
+        {movies.map((movie) => (
+          <img
+            key={movie.id}
+            src={`${base_url}${movie.poster_path || movie.backdrop_path}`}
+            alt={movie.name}
+            onClick={() => handleClick(movie)}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

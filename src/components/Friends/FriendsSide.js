@@ -6,7 +6,7 @@ import { useStateValue } from "../../Context/StateProvider";
 import { db } from "../../firebase/config";
 import "../css/FriendsSide.css";
 
-export default function FriendsSide() {
+export default function FriendsSide({personAddActive, peopleActive}) {
   const [friends, setFriends] = useState(0);
   const [{ user }] = useStateValue();
   useEffect(() => {
@@ -14,6 +14,7 @@ export default function FriendsSide() {
       collection(db, "users", user?.email, "friends"),
       (snapshot) => setFriends(snapshot.docs)
     );
+    // eslint-disable-next-line
   }, [db]);
 
   return (
@@ -28,15 +29,15 @@ export default function FriendsSide() {
       <Link to="/suggestions">
         {" "}
         <div className="friendSide__menu !mb-1">
-          <div className="header__rightIconsBg friendSide__menuIcon active">
-            <PersonAdd />
+          <div className={`header__rightIconsBg friendSide__menuIcon ${personAddActive}`}>
+            <PersonAdd  />
           </div>
           <p className="friendSide__menuTxt">Suggestions</p>
         </div>
       </Link>
       <Link to="/friends" onClick={() => setFriends(0)}>
         <div className="friendSide__menu !mb-2 relative">
-          <div className="header__rightIconsBg friendSide__menuIcon active">
+          <div className={`header__rightIconsBg friendSide__menuIcon ${peopleActive}`}>
             <People />
           </div>
           <p className="friendSide__menuTxt">Friends</p>

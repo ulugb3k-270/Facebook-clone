@@ -1,5 +1,5 @@
 import "../css/Movies.css";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MoviesRow from "../Movies/MoviesRow";
 import requests from "../../assets/moviesGenres";
 import Loader from "./Loader";

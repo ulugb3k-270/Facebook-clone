@@ -1,10 +1,7 @@
 import "../css/Friends.css";
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
-
 import { useStateValue } from "../../Context/StateProvider";
-
 import { db } from "../../firebase/config";
 import FriendsSide from "./FriendsSide";
 import {
@@ -47,7 +44,7 @@ export default function Suggestions() {
       <div className="Friends">
         <div className="friends__container ">
           <div className="friends__side">
-            <FriendsSide />
+            <FriendsSide personAddActive={"active"} />
           </div>
           <div className="asd relative overflow-y-scroll">
             <h1 className="absolute left-0 -top-1">

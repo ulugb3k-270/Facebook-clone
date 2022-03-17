@@ -9,14 +9,14 @@ import {
   OndemandVideo,
   Search,
 } from "@material-ui/icons";
-
+import {auth} from "../../firebase/config"
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { useStateValue } from "../../Context/StateProvider";
 
 
 export default function Bookmark() {
-  const [{ user }, dispatch] = useStateValue();
+  const [{ user }] = useStateValue();
   const [popUp, setPopUp] = useState(false);
 
   let navigate = useNavigate();
@@ -25,15 +25,9 @@ export default function Bookmark() {
     setPopUp(!popUp);
   };
 
-  const handleBack = () => {
-    navigate(-1);
-  };
-
   const logOut = () => {
     navigate("/");
-    dispatch({
-      user: null,
-    });
+    auth.signOut()
     setPopUp(false);
   };
 
@@ -41,7 +35,7 @@ export default function Bookmark() {
     <div className="Bookmark">
       <div className="bookmark__header">
         <div className="bookmark__headerContent">
-          <ArrowBack onClick={handleBack} />
+          <ArrowBack onClick={() => navigate(-1)} />
           <img
             src="https://i.ibb.co/HBmWYrQ/pngfind-com-find-us-on-facebook-2211195.png"
             alt=""

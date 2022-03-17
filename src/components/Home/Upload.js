@@ -21,11 +21,11 @@ export default function Upload() {
   const videoPickerRef = useRef(null);
   const [loading, setLoading] = useState(null);
 
-  //  input files
+  // ===== input files =====
   const [selectedFile, setSelectedFile] = useState("");
   const [selectedVideo, setSelectedVideo] = useState("");
   const [input, setInput] = useState("");
-  // input files end
+  //  ===== input files end  ======
 
   const addImageToPost = (e) => {
     const reader = new FileReader();
@@ -51,7 +51,7 @@ export default function Upload() {
     };
   };
 
-  //   upload
+  // =====  upload Post ======
   const uploadPost = async (e) => {
     if (input || selectedFile || selectedVideo) {
       e.preventDefault();
@@ -101,8 +101,6 @@ export default function Upload() {
     }
   };
 
-
-  // -------------------
 
   // -------------------
 
@@ -224,7 +222,7 @@ export default function Upload() {
       {uploadBool && (
         <div
           className={` fixed w-full h-full popUp__upload top-0 left-0 grid place-items-center z-50 ${
-            loading ? "cursor-wait" : ""
+            loading ? "cursor-wait" : undefined
           }`}
         >
           <form

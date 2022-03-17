@@ -101,12 +101,14 @@ export default function Post({
 
   useEffect(() => {
     setHasLiked(likes.findIndex((like) => like.id === user?.email) !== -1);
+     // eslint-disable-next-line
   }, [likes]);
 
   useEffect(() => {
     return onSnapshot(collection(db, "posts", id, "likes"), (snapshot) =>
       setLikes(snapshot.docs)
     );
+     // eslint-disable-next-line
   }, [db]);
 
   useEffect(() => {
@@ -117,6 +119,7 @@ export default function Post({
       ),
       (snapshot) => setComments(snapshot.docs)
     );
+     // eslint-disable-next-line
   }, [db]);
 
    // Check user admin or not
@@ -132,6 +135,7 @@ export default function Post({
         setIsAdminPost(true)
       }
     }
+     // eslint-disable-next-line
   }, [userEmail])
 
   return (
@@ -145,7 +149,7 @@ export default function Post({
               {userName}{" "}
               <span
                 className={
-                  isAdminPost && "verified"
+                  isAdminPost ?  "verified" : undefined
                 }
               />
             </h2>
@@ -159,7 +163,7 @@ export default function Post({
           <div>
             <Delete onClick={() => setDeleteBool(true)} />
             {deleteBool && (
-              <div className="absolute left-0 top-0 bg-[#0000007e] w-full h-full flex flex-col justify-center items-center rounded-lg">
+              <div className="absolute left-0 top-0 bg-[#0000007e] w-full h-full flex flex-col justify-center items-center rounded-lg z-30">
                 <div className="bg-white p-2 rounded-lg w-[40%] z-40">
                   <p className="p-4 text-sm sm:text-md">
                     Do you want to delete this photo?

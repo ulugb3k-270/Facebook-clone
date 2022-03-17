@@ -1,38 +1,34 @@
 import "../css/Friends.css";
-
 import React, { useEffect, useState } from "react";
 import { Button } from "@material-ui/core";
-
 import { useStateValue } from "../../Context/StateProvider";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase/config";
 import FriendsSide from "./FriendsSide";
 import { collection, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import Header from "../Header";
-
 export default function Friends() {
   const [{ user }] = useStateValue();
-
   const [friends, setFriends] = useState([]);
-
   const removeFriend = async (email) => {
     await deleteDoc(doc(db, "users", user?.email, "friends", email));
   };
-
   useEffect(() => {
     return onSnapshot(
       collection(db, "users", user?.email, "friends"),
       (snapshot) => setFriends(snapshot.docs)
     );
+    // eslint-disable-next-line
   }, [db]);
 
   return (
     <>
       <Header activePeople={"active"} />
+
       <div className="Friends">
         <div className="friends__container ">
           <div className="friends__side">
-            <FriendsSide />
+            <FriendsSide peopleActive={"active"} />
           </div>
           <div className="asd relative">
             {friends.length ? (

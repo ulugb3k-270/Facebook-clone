@@ -1,3 +1,4 @@
+import "./css/Header.css";
 import { Avatar } from "@material-ui/core";
 import {
   Menu,
@@ -11,43 +12,41 @@ import {
   Search,
   Info,
 } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./css/Header.css";
 import { useStateValue } from "../Context/StateProvider";
 import { admin } from "../assets/admin";
 import { auth } from "../firebase/config";
 
-export default function Header({activeHome, activePeople, activeInfo, activeMovies}) {
+export default function Header({
+  activeHome,
+  activePeople,
+  activeInfo,
+  activeMovies,
+}) {
   const [logOutHover, setLogOutHover] = useState(true);
   const [{ user }] = useStateValue();
-  const navigate = useNavigate()
-  const [isAdmin, setIsAdmin] = useState(false)
-
-  //  Log Out button on/off function
-  const hadnleLogOutHover = () => {
-    setLogOutHover(!logOutHover);
-  };
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Log Out function
 
   const logOut = () => {
-    navigate("/")
-    auth.signOut()
+    navigate("/");
+    auth.signOut();
   };
 
   // Check user admin or not
 
   useEffect(() => {
-    for(let i = 0; i < admin.length; i++){
-      if(admin[i] === user?.email){
-        setIsAdmin(true)
-        return
+    for (let i = 0; i < admin.length; i++) {
+      if (admin[i] === user?.email) {
+        setIsAdmin(true);
+        return;
       }
     }
-  }, [])
-
-
+    //  eslint-disable-next-line
+  }, []);
 
   return (
     <div className="Header">
@@ -80,17 +79,22 @@ export default function Header({activeHome, activePeople, activeInfo, activeMovi
           </div>
         </Link>
         <Link to="/movies">
-          <div className={`header__middleIcon ${activeMovies}`} >
+          <div className={`header__middleIcon ${activeMovies}`}>
             <OndemandVideo />
           </div>
         </Link>
-        
       </div>
       <div className="header__right">
-        <div className="header__rightUser" onClick={hadnleLogOutHover}>
+        <div
+          className="header__rightUser"
+          onClick={() => setLogOutHover(!logOutHover)}
+        >
           <Avatar src={user?.photoURL} />
 
-          <p>{user?.displayName} <span className={`${isAdmin  && "verified"}`} ></span></p>
+          <p>
+            {user?.displayName}{" "}
+            <span className={`${isAdmin ? "verified" : undefined} `}></span>
+          </p>
           <div
             className={
               logOutHover

@@ -1,18 +1,14 @@
 import { ArrowBack } from "@material-ui/icons";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../../Context/StateProvider";
 import "../css/Description.css";
 
 export default function Description() {
   const [{ description }] = useStateValue();
-
   const navigate = useNavigate();
-
   return (
     <div className="description">
-      {/* BANNER */}
-
+      
       <header
         className="banner "
         style={{
@@ -42,7 +38,6 @@ export default function Description() {
         <div className="banner--fade-Bottom"></div>
       </header>
 
-      {/* BANNER */}
       <div className="desctiption__bottom">
         <div className="desctiption__bottomLeft">
           <img

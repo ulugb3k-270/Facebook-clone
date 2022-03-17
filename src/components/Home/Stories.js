@@ -29,10 +29,10 @@ export default function Stories() {
         </p>
       </div>
       {suggestions
-        .filter((suggestion) => suggestion?.data().userEmail !== user?.email)
-        .map((user) => (
+      .filter((suggestion) => suggestion?.data().userEmail !== user?.email)
+      .map((user, id) => (
           <div
-            key={user?.data().id}
+            key={id}
             className="box overflow-hidden relative bg-white rounded-lg hover:scale-105 transition 1s ease-out cursor-pointer min-w-[106px]"
           >
             <img

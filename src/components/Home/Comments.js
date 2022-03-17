@@ -19,10 +19,8 @@ export default function Comments({
   const [{ user }] = useStateValue();
   const [delCommentBool, setDelCommentBool] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isReply, setIsReply] = useState(false);
-  const [{ reply }, dispatch] = useStateValue();
 
-  // Check user admin or not
+ // === Check user admin or not ===
 
   useEffect(() => {
     for (let i = 0; i < admin.length; i++) {
@@ -32,17 +30,6 @@ export default function Comments({
       }
     }
   }, [userEmail]);
-
-  const replyClick = () => {
-    setIsReply(!isReply);
-
-    dispatch({
-      type: "SET_REPLY",
-      reply: userComment,
-      replyAuthor: userName,
-      commentId: commentId,
-    });
-  };
 
   return (
     <>
@@ -56,7 +43,7 @@ export default function Comments({
             />
             <div className=" bg-[#f0f2f5] rounded-lg border ">
               <h2 className="text-md font-semibold px-2 pt-2">
-                {userName} <span className={isAdmin && "verified"}></span>
+                {userName} <span className={isAdmin ? "verified" : undefined}></span>
               </h2>
 
               {userCommentImg && (
@@ -72,7 +59,7 @@ export default function Comments({
           <div className="flex justify-between items-start w-full pl-[3rem] ">
             <p
               className="text-[#65676B] font-bold text-[10px] cursor-pointer hover:underline"
-              onClick={replyClick}
+              
             >
               Reply
             </p>
@@ -104,13 +91,7 @@ export default function Comments({
           <></>
         )}
       </div>
-      {/* <ReplyComments
-        postId={postId}
-        commentIdqwe={commentId}
-        replyId
-        isReply={isReply}
-        commentUserName={userName}
-      /> */}
+
     </>
   );
 }

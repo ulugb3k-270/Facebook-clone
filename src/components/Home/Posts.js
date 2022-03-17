@@ -11,10 +11,8 @@ export default function Posts() {
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => setPosts(snapshot.docs)
     );
+     // eslint-disable-next-line
   }, [db]);
-
-
-
 
   return (
     <div className="Posts my-4 pb-0 rounded-lg flex flex-col gap-2  ">

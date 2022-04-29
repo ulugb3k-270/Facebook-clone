@@ -1,16 +1,23 @@
+// COMPONENTS
 import Header from "./components/Header";
-import Friends from "./components/Friends/Friends";
-import About from "./components/About/About";
+import Friends from "./components/Friends";
+import About from "./components/About";
 import HomePage from "./components/Home/HomePage";
 import Login from "./firebase/components/Login";
 import Movies from "./components/Movies/Movies";
-import Bookmark from "./components/Friends/Bookmark";
-import Description from "./components/Movies/Description";
+import Bookmark from "./components/Bookmark";
+import Description from "./components/Movies/Description/Description";
+import Suggestions from "./components/Suggestions/Suggestions";
+
+// HOOKS
+import { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useStateValue } from "./Context/StateProvider";
-import Suggestions from "./components/Friends/Suggestions";
+
+// FIREBASE
 import { auth } from "./firebase/config";
-import { useEffect } from "react";
+
+// CONTEXT API
 import { actionTypes } from "./Context/reducer";
 
 function App() {

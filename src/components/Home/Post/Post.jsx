@@ -86,10 +86,9 @@ export default function Post({
     };
   };
 
-  const postComment = async (url) => {
-    // e.preventDefault();
+  const postComment = async (e, url) => {
+    e.preventDefault();
 
-    console.log(url);
 
     const docRef = await addDoc(collection(db, "posts", id, "comment"), {
       userName: user?.displayName,

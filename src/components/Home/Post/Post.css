@@ -18,13 +18,13 @@
 }
 
 .liked__btn {
-  background: url("https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/E2BXhjYXUP-.png");
+  background: url("https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y9B7OhQbIRL.png");
   background-size: auto;
   width: 18px;
   height: 18px;
   background-repeat: no-repeat;
   width: 100%;
-  background-position: 50% -203px;
+  background-position: 50% -297px;
   -webkit-filter: invert(39%) sepia(57%) saturate(200%) saturate(200%)
     saturate(200%) saturate(200%) saturate(200%) saturate(147.75%)
     hue-rotate(202deg) brightness(97%) contrast(96%);
@@ -32,7 +32,7 @@
 
 .like__btn,
 .comment__btn {
-  background: url("https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/E2BXhjYXUP-.png");
+  background: url("https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Y9B7OhQbIRL.png");
   background-size: auto;
   width: 18px;
   height: 18px;
@@ -41,10 +41,10 @@
 }
 
 .like__btn {
-  background-position: 50% -222px;
+  background-position: 50% -297px;
 }
 .comment__btn {
-  background-position: 34% -184px;
+  background-position: 34% -259px;
 }
 
 .like__btn-span {

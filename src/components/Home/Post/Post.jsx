@@ -254,7 +254,7 @@ export default function Post({
           className="comment__btn text-center w-full p-2"
           onClick={() => commentRef.current.click()}
         >
-          <p className=" post__media-text like__btn-span-comment">Comment</p>
+          <p className=" post__media-text like__btn-span-comment">Comments</p>
         </button>
       </div>
       {!commentBool && (

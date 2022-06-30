@@ -107,6 +107,7 @@ export default function Upload() {
 
       setLoading(false);
       setInput("");
+      setUploadBool(false);
     }
   };
 
